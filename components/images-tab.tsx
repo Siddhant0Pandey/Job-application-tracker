@@ -52,7 +52,6 @@ export default function ImagesTab() {
               className="rounded-sm border-accent border"
             />
           )}
-
           {activeTab === "board" && (
             <Image
               alt="Board"
