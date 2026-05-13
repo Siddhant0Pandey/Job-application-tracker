@@ -37,7 +37,7 @@ export default function ImagesTab() {
           {activeTab === "organise" && (
             <Image
               alt="Organized"
-              src="/hero-images/organize.jpg"
+              src="/hero-images/dashboardimage1.png"
               width={1200}
               height={800}
               className="rounded-sm border-accent border"
@@ -46,7 +46,7 @@ export default function ImagesTab() {
           {activeTab === "hired" && (
             <Image
               alt="Hired"
-              src="/hero-images/hired.png"
+              src="/hero-images/dashboardimage2.png"
               width={1200}
               height={800}
               className="rounded-sm border-accent border"
@@ -55,7 +55,7 @@ export default function ImagesTab() {
           {activeTab === "board" && (
             <Image
               alt="Board"
-              src="/hero-images/boards.jpg"
+              src="/hero-images/dashboardimage3.png"
               width={1200}
               height={800}
               className="rounded-sm border-accent border"
