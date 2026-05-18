@@ -121,14 +121,10 @@ function DroppableColumn({
             </span>
           </div>
           <DropdownMenu>
-            <DropdownMenuTrigger >
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6 text-muted-foreground/50 hover:text-muted-foreground"
-              >
+            <DropdownMenuTrigger className="h-6 w-6 text-muted-foreground/50 hover:text-muted-foreground">
+             
                 <MoreVertical className="h-3.5 w-3.5" />
-              </Button>
+           
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem className="text-destructive focus:text-destructive focus:bg-destructive/10">
@@ -153,9 +149,9 @@ function DroppableColumn({
           items={sortedJobs.map((job) => job._id)}
           strategy={verticalListSortingStrategy}
         >
-          {sortedJobs.map((job, key) => (
-            <SortableJobCard
-              key={key}
+          {sortedJobs.map((job) => (
+  <SortableJobCard
+    key={job._id}
               job={{ ...job, columnId: job.columnId || column._id }}
               columns={sortedColumns}
             />
@@ -232,9 +228,9 @@ export default function KanbanBoard({ board, userId }: KanbanBoardProps) {
     let sourceIndex = -1;
 
     for (const column of sortedColumns) {
-      const jobs = column.jobApplications
-        .slice()
-        .sort((a, b) => a.order - b.order);
+      const jobs = (column.jobApplications ?? [])
+  .slice()
+  .sort((a, b) => a.order - b.order);
       const jobIndex = jobs.findIndex((j) => j._id === activeId);
       if (jobIndex !== -1) {
         draggedJob = jobs[jobIndex];
@@ -262,8 +258,8 @@ export default function KanbanBoard({ board, userId }: KanbanBoardProps) {
       newOrder = jobsInTarget.length;
     } else if (targetJob) {
       const targetJobColumn = sortedColumns.find((col) =>
-        col.jobApplications.some((j) => j._id === targetJob._id)
-      );
+  (col.jobApplications ?? []).some((j) => j._id === targetJob._id)
+);
       targetColumnId = targetJob.columnId || targetJobColumn?._id || "";
       if (!targetColumnId) return;
 
@@ -272,9 +268,9 @@ export default function KanbanBoard({ board, userId }: KanbanBoardProps) {
       );
       if (!targetColumnObj) return;
 
-      const allJobsInTargetOriginal = targetColumnObj.jobApplications
-        .slice()
-        .sort((a, b) => a.order - b.order);
+      const allJobsInTargetOriginal = (targetColumnObj.jobApplications ?? [])
+  .slice()
+  .sort((a, b) => a.order - b.order);
       const allJobsInTargetFiltered = allJobsInTargetOriginal.filter(
         (j) => j._id !== activeId
       );

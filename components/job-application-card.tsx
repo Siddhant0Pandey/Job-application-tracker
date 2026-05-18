@@ -176,14 +176,10 @@ export default function JobApplicationCard({
               </a>
             )}
             <DropdownMenu>
-              <DropdownMenuTrigger >
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-6 w-6 text-muted-foreground/50 hover:text-muted-foreground"
-                >
+              <DropdownMenuTrigger className="h-6 w-6 text-muted-foreground/50 hover:text-muted-foreground" >
+               
                   <MoreVertical className="h-3.5 w-3.5" />
-                </Button>
+                
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="min-w-[160px]">
                 <DropdownMenuItem
