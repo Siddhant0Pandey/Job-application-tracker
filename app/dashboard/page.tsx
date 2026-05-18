@@ -4,13 +4,12 @@ import { redirect } from "next/navigation";
 import KanbanBoard from "@/components/kanban-board";
 import { Suspense } from "react";
 import dbConnect from "@/lib/db";
+import { initializeUserBoard } from "@/lib/models/init-user-board";
 
 async function getBoard(userId: string) {
-  "use cache";
-
   await dbConnect();
 
-  const boardDoc = await Board.findOne({
+  let boardDoc = await Board.findOne({
     userId: userId,
     name: "Job Hunt",
   }).populate({
@@ -19,6 +18,20 @@ async function getBoard(userId: string) {
       path: "jobApplications",
     },
   });
+
+  // If board doesn't exist yet (e.g. auth hook failed or race condition), create it now
+  if (!boardDoc) {
+    await initializeUserBoard(userId);
+    boardDoc = await Board.findOne({
+      userId: userId,
+      name: "Job Hunt",
+    }).populate({
+      path: "columns",
+      populate: {
+        path: "jobApplications",
+      },
+    });
+  }
 
   if (!boardDoc) return null;
 
